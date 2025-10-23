@@ -5,13 +5,13 @@ import { getDatabase } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-d
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  databaseURL: "YOUR_DATABASE_URL",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyBBvHmysF2Cneuca0rN8Xqcx-5i7cfYtkk",
+  authDomain: "photofeed-ce4a7.firebaseapp.com",
+  projectId: "photofeed-ce4a7",
+  storageBucket: "photofeed-ce4a7.appspot.com",
+  messagingSenderId: "955271059561",
+  appId: "1:955271059561:web:38ce5059bc24068848eaf8",
+  measurementId: "G-6N83D6KPWH"
 };
 
 // Initialize Firebase

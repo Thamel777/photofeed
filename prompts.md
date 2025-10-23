@@ -25,3 +25,28 @@ Create the following files:
     * Create an empty file in the root directory named `prompts.md`. This file will be used to log all prompts[cite: 51, 52].
 
 Initialize the project for Firebase Hosting.
+
+---
+
+Using the Firebase v9 modular SDK and the files from the previous step, generate the complete UI and logic for user authentication.
+
+1.  **HTML (Update `index.html`):**
+    * Inside the `&lt;div id="auth-container"&gt;`, create a form for user authentication.
+    * The form should include:
+        * An email input.
+        * A password input.
+        * A "Sign Up" button.
+        * A "Log In" button.
+    * Somewhere on the page (e.g., in the header), add a "Log Out" button with `id="logout-button"`. This button should be hidden by default.
+
+2.  **JavaScript (Create `auth.js`):**
+    * Create a new file named `auth.js`.
+    * Import the `auth` object from `./firebase-config.js`.
+    * Import all necessary functions from `firebase/auth` (e.g., `createUserWithEmailAndPassword`, `signInWithEmailAndPassword`, `signOut`, `onAuthStateChanged`).
+    * Add event listeners to the "Sign Up", "Log In", and "Log Out" buttons.
+    * Implement the `onAuthStateChanged` listener to manage user sessions[cite: 37]. This listener must:
+        * If a user is logged in: Hide `&lt;div id="auth-container"&gt;` and show `&lt;div id="upload-container"&gt;` and the "Log Out" button.
+        * If no user is logged in: Show `&lt;div id="auth-container"&gt;` and hide `&lt;div id="upload-container"&gt;` and the "Log Out" button.
+
+3.  **HTML (Update `index.html`):**
+    * Link the new `auth.js` file in `index.html` as a module (`&lt;script type="module" src="auth.js"&gt;&lt;/script&gt;`). Make sure it is loaded *after* `firebase-config.js`.
