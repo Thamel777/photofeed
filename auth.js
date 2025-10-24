@@ -5,7 +5,9 @@ import {
     signOut,
     onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-import { auth } from './firebase-config.js';
+import { auth, database } from './firebase-config.js';
+import { ref, set } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+import { uploadImage } from './profile.js';
 
 const authContainer = document.getElementById('auth-container');
 const uploadContainer = document.getElementById('upload-container');
@@ -38,31 +40,58 @@ loginForm.addEventListener('submit', (e) => {
         });
 });
 
-signupForm.addEventListener('submit', (e) => {
+
+
+const handleSignUp = async (e) => {
     e.preventDefault();
     const email = document.getElementById('signup-email').value;
     const password = document.getElementById('signup-password').value;
-    createUserWithEmailAndPassword(auth, email, password)
-        .catch((error) => {
-            console.error("Error signing up:", error);
-            alert(error.message);
+    const username = document.getElementById('signup-username').value;
+    const file = document.getElementById('signup-profile-pic').files[0];
+
+    if (!file) {
+        alert('Please select a profile image.');
+        return;
+    }
+
+    try {
+        console.log('Step 1: Uploading profile image...');
+        const profileImageUrl = await uploadImage(file);
+        console.log(`Step 1 Success: Image URL received: ${profileImageUrl}`);
+
+        console.log('Step 2: Creating user in Firebase Auth...');
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        console.log(`Step 2 Success: User created: ${user.uid}`);
+
+        console.log('Step 3: Writing user data to Realtime Database...');
+        await set(ref(database, 'users/' + user.uid), {
+            username: username,
+            profileImageUrl: profileImageUrl,
         });
-});
+        console.log('Step 3 Success: Database write complete.');
+
+        console.log('Sign-up process successful!');
+
+    } catch (error) {
+        console.error('SIGN-UP FAILED:', error);
+        alert(`Sign-up failed: ${error.message}`);
+    }
+};
+
+signupForm.addEventListener('submit', handleSignUp);
 
 logoutButton.addEventListener('click', () => {
     signOut(auth);
 });
 
 onAuthStateChanged(auth, (user) => {
+    const nav = document.querySelector('header nav');
     if (user) {
+        nav.style.display = 'flex';
         authContainer.style.display = 'none';
-        uploadContainer.style.display = 'block';
-        logoutButton.style.display = 'block';
     } else {
+        nav.style.display = 'none';
         authContainer.style.display = 'flex';
-        uploadContainer.style.display = 'none';
-        logoutButton.style.display = 'none';
-        loginForm.style.display = 'block';
-        signupForm.style.display = 'none';
     }
 });

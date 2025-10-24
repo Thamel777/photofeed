@@ -63,10 +63,64 @@ header {
     text-decoration: underline;
 }
 
+input[type="file"] {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
 #upload-container, #feed-container {
     margin: 20px;
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: white;
+}
+
+header nav {
+    display: flex;
+    gap: 15px;
+}
+
+header nav a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+#profile-container {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: white;
+}
+
+#profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+#profile-image-display {
+    border-radius: 50%;
+    object-fit: cover;
+    width: 150px;
+    height: 150px;
+    border: 2px solid #ddd;
+}
+
+#profile-update-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 300px;
+}
+
+#show-signup-link, #show-login-link {
+    cursor: pointer;
+    color: #007bff;
 }

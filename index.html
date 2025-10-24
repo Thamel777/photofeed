@@ -10,7 +10,12 @@
     <header>
         <div class="logo">P</div>
         <h1>PhotoFeed</h1>
-        <button id="logout-button" style="display: none;">Log Out</button>
+        <nav id="main-nav">
+            <a href="#" id="feed-link">Feed</a>
+            <a href="#" id="upload-link">Upload</a>
+            <a href="#" id="profile-link">Profile</a>
+            <button id="logout-button">Log Out</button>
+        </nav>
     </header>
     <main>
         <div id="auth-container">
@@ -20,22 +25,39 @@
                     <input type="email" id="login-email" placeholder="Email" required>
                     <input type="password" id="login-password" placeholder="Password" required>
                     <button type="submit">Login</button>
-                    <p>Not registered? <span id="show-signup-link" class="auth-toggle">Create an account!</span></p>
+                    <p>Not registered? <span id="show-signup-link">Create an account!</span></p>
                 </form>
                 <form id="signup-form" style="display: none;">
                     <h2>Create Account</h2>
+                    <input type="text" id="signup-username" placeholder="Username" required>
+                    <input type="file" id="signup-profile-pic" accept="image/*" required>
                     <input type="email" id="signup-email" placeholder="Email" required>
                     <input type="password" id="signup-password" placeholder="Password" required>
                     <button type="submit">Sign Up</button>
-                    <p>Already have an account? <span id="show-login-link" class="auth-toggle">Sign in</span></p>
+                    <p>Already have an account? <span id="show-login-link">Sign in</span></p>
                 </form>
             </div>
         </div>
         <div id="upload-container" style="display: none;"></div>
-        <div id="feed-container"></div>
+        <div id="feed-container" style="display: none;"></div>
+        <div id="profile-container" style="display: none;">
+            <h2>Your Profile</h2>
+            <img id="profile-img-display" src="" alt="Profile Picture" width="100" height="100">
+            <h3 id="profile-username-display"></h3>
+            <h3>Update Profile</h3>
+            <form id="profile-update-form">
+                <label for="update-username">Username:</label>
+                <input type="text" id="update-username" required>
+                <label for="update-profile-pic">New Profile Picture (Optional):</label>
+                <input type="file" id="update-profile-pic" accept="image/*">
+                <button type="submit">Update Profile</button>
+            </form>
+        </div>
     </main>
     <script type="module" src="firebase-config.js"></script>
     <script type="module" src="auth.js"></script>
     <script type="module" src="main.js"></script>
+    <script type="module" src="profile.js"></script>
+    <script type="module" src="navigation.js"></script>
 </body>
 </html>
