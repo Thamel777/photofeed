@@ -38,7 +38,16 @@
                 </form>
             </div>
         </div>
-        <div id="upload-container" style="display: none;"></div>
+        <div id="upload-container" style="display: none;">
+            <h2>Create a New Post</h2>
+            <form id="create-post-form">
+                <label for="post-image">Image:</label>
+                <input type="file" id="post-image" accept="image/*" required>
+                <label for="post-caption">Caption:</label>
+                <input type="text" id="post-caption" placeholder="Write a caption..." required>
+                <button type="submit">Create Post</button>
+            </form>
+        </div>
         <div id="feed-container" style="display: none;"></div>
         <div id="profile-container" style="display: none;">
             <h2>Your Profile</h2>
@@ -59,5 +68,7 @@
     <script type="module" src="main.js"></script>
     <script type="module" src="profile.js"></script>
     <script type="module" src="navigation.js"></script>
+    <script type="module" src="upload.js"></script>
+    <script type="module" src="feed.js"></script>
 </body>
 </html>
