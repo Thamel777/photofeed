@@ -167,4 +167,10 @@ Generate the complete functionality for creating new image posts and displaying 
         * `<script type="module" src="upload.js"></script>`
         * `<script type="module" src="feed.js"></script>`
 
+## Prompt 5
 
+Do a final polish of the entire `style.css` file.
+1.  Set a clean, modern font (like 'Inter' or 'Lato') for the entire body.
+2.  Ensure all buttons (`button`, `input[type="submit"]`) have a consistent style (e.g., same color, padding, border-radius, and a `cursor: pointer`).
+3.  Make sure the main containers (`#auth-container`, `#feed-container`, `#upload-container`, `#profile-container`) have a consistent `max-width` and `margin: auto` so they are centered.
+4.  Clean up any redundant or unused CSS.

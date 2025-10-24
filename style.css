@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
 body {
-    font-family: sans-serif;
+    font-family: 'Inter', sans-serif;
     margin: 0;
-    background-color: #A9B9CC;
+    background-color: #f0f2f5;
+    color: #333;
 }
 
 header {
@@ -9,120 +12,133 @@ header {
     align-items: center;
     justify-content: space-between;
     padding: 10px 20px;
-    background-color: #f8f8f8;
+    background-color: #fff;
     border-bottom: 1px solid #ddd;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    position: relative;
 }
 
 .logo {
     font-size: 24px;
     font-weight: bold;
+    color: #007bff;
 }
 
-#auth-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80vh;
+main {
+    padding: 20px;
 }
 
-.auth-box {
+#auth-container, #feed-container, #upload-container, #profile-container {
+    max-width: 600px;
+    margin: auto;
     background-color: white;
     padding: 40px;
     border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    width: 320px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
 }
 
-.auth-box h2 {
+#feed-container {
+    padding: 20px;
+}
+
+h2 {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
-.auth-box form input {
+input[type="email"], input[type="password"], input[type="text"], input[type="file"] {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     margin-bottom: 15px;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 8px;
     box-sizing: border-box;
+    transition: border-color 0.3s;
 }
 
-.auth-box form button {
+input[type="email"]:focus, input[type="password"]:focus, input[type="text"]:focus, input[type="file"]:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+button, input[type="submit"] {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     background-color: #007bff;
     color: white;
     cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.3s;
 }
 
-.auth-toggle {
-    color: #007bff;
-    cursor: pointer;
-    text-decoration: underline;
+#logout-button {
+    width: auto;
+    padding: 8px 16px;
 }
 
-input[type="file"] {
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 10px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-#upload-container, #feed-container {
-    margin: 20px;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: white;
-}
-
-header nav {
-    display: flex;
-    gap: 15px;
-}
-
-header nav a {
-    text-decoration: none;
-    color: #007bff;
-    font-weight: bold;
-}
-
-#profile-container {
-    margin: 20px;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: white;
-}
-
-#profile-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-}
-
-#profile-image-display {
-    border-radius: 50%;
-    object-fit: cover;
-    width: 150px;
-    height: 150px;
-    border: 2px solid #ddd;
-}
-
-#profile-update-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 300px;
+button:hover, input[type="submit"]:hover {
+    background-color: #0056b3;
 }
 
 #show-signup-link, #show-login-link {
     cursor: pointer;
     color: #007bff;
+    text-align: center;
+    display: block;
+    margin-top: 15px;
+}
+
+#main-nav {
+    display: flex;
+    align-items: center;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#main-nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+#main-nav a:hover {
+    color: #007bff;
+}
+
+#profile-img-display {
+    border-radius: 50%;
+    object-fit: cover;
+    width: 120px;
+    height: 120px;
+    border: 2px solid #ddd;
+    display: block;
+    margin: 0 auto 20px;
+}
+
+.post-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin: 20px auto;
+    background-color: #fff;
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    padding: 15px;
 }
 
 .post-profile-pic {
@@ -130,20 +146,7 @@ header nav a {
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
-    margin-right: 10px;
-}
-
-.post-card {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    margin: 20px auto;
-    max-width: 500px;
-}
-
-.post-header {
-    display: flex;
-    align-items: center;
-    padding: 10px;
+    margin-right: 15px;
 }
 
 .post-image {
@@ -152,5 +155,5 @@ header nav a {
 }
 
 .post-caption {
-    padding: 0 10px 10px 10px;
+    padding: 15px;
 }
