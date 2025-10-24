@@ -12,6 +12,7 @@ import { uploadImage } from './profile.js';
 const authContainer = document.getElementById('auth-container');
 const uploadContainer = document.getElementById('upload-container');
 const logoutButton = document.getElementById('logout-button');
+const feedContainer = document.getElementById('feed-container');
 
 const loginForm = document.getElementById('login-form');
 const signupForm = document.getElementById('signup-form');
@@ -90,8 +91,10 @@ onAuthStateChanged(auth, (user) => {
     if (user) {
         nav.style.display = 'flex';
         authContainer.style.display = 'none';
+        feedContainer.style.display = 'block';
     } else {
         nav.style.display = 'none';
         authContainer.style.display = 'flex';
+        feedContainer.style.display = 'none';
     }
 });
