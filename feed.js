@@ -39,8 +39,8 @@ onValue(postsRef, async (snapshot) => {
                 <img src="${userData.profileImageUrl}" class="post-profile-pic">
                 <span class="post-username">${userData.username}</span>
             </div>
-            <img src="${postData.imageUrl}" class="post-image">
             <p class="post-caption">${postData.caption}</p>
+            <img src="${postData.imageUrl}" class="post-image">
         `;
 
         feedContainer.appendChild(postCard);

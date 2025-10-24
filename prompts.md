@@ -1,3 +1,5 @@
+## Prompt 1
+
 Generate the initial project structure for a new social media web application named "PhotoFeed".
 
 This project must use the following Firebase services with the v9 modular SDK:
@@ -26,7 +28,7 @@ Create the following files:
 
 Initialize the project for Firebase Hosting.
 
----
+## Prompt 2
 
 Using the Firebase v9 modular SDK and the files from the previous step, generate the complete UI and logic for user authentication.
 
@@ -50,6 +52,8 @@ Using the Firebase v9 modular SDK and the files from the previous step, generate
 
 3.  **HTML (Update `index.html`):**
     * Link the new `auth.js` file in `index.html` as a module (`&lt;script type="module" src="auth.js"&gt;&lt;/script&gt;`). Make sure it is loaded *after* `firebase-config.js`.
+
+## Prompt 3
 
 Update the existing authentication component to include fields for "Username" and "Profile Image" in the sign-up form, and save this data to the Realtime Database.
 
@@ -79,3 +83,88 @@ Update the existing authentication component to include fields for "Username" an
 
 3.  **CSS (Update `style.css`):**
     * Add basic styling to the new `input[type="file"]` to make it consistent with the other inputs.
+
+
+---
+
+## Prompt 4
+
+Generate the complete functionality for creating new image posts and displaying them on a real-time chronological feed.
+
+1.  **HTML (Update `index.html`):**
+    * Inside the `<div id="upload-container">` (which is currently shown after login):
+        * Add a heading: `<h2>Create a New Post</h2>`
+        * Add a form: `<form id="create-post-form">`
+        * Inside the form, add:
+            * `<label for="post-image">Image:</label>`
+            * `<input type="file" id="post-image" accept="image/*" required>`
+            * `<label for="post-caption">Caption:</label>`
+            * `<input type="text" id="post-caption" placeholder="Write a caption..." required>`
+            * `<button type="submit">Create Post</button>`
+        * `</form>`
+
+2.  **JavaScript (Create `upload.js`):**
+    * Create a new file `upload.js`.
+    * Import `auth`, `database` from `./firebase-config.js`.
+    * Import `onAuthStateChanged` from `firebase/auth`.
+    * Import `ref`, `push`, `set`, `serverTimestamp` from `firebase/database`.
+    * **ImgBB Upload Function:** Create an `async function uploadImage(file)` that takes a file, uses `FormData` and `fetch` to upload it to ImgBB, and returns the `response.data.url`.
+        * Include a placeholder: `const apiKey = 'YOUR_IMGBB_API_KEY_GOES_HERE'`.
+    * **Event Listener:** Add a `submit` event listener to `#create-post-form`. This listener should be an `async` function.
+    * **Inside the listener:**
+        1.  Call `e.preventDefault()`.
+        2.  Get the `file` from `#post-image` and `caption` from `#post-caption`.
+        3.  Get the `currentUser` from `auth.currentUser`. If no user, return.
+        4.  `await` the `uploadImage(file)` to get the `imageUrl`.
+        5.  Create a `postData` object:
+            * `userId: currentUser.uid`
+            * `caption: caption`
+            * `imageUrl: imageUrl`
+            * `timestamp: serverTimestamp()`
+        6.  Create a new post reference: `const newPostRef = push(ref(database, 'posts'));`
+        7.  `await set(newPostRef, postData);`
+        8.  Alert "Post created!" and reset the form.
+
+3.  **JavaScript (Create `feed.js`):**
+    * Create a new file `feed.js`.
+    * Import `database` from `./firebase-config.js`.
+    * Import `ref`, `onValue`, `query`, `orderByChild`, `get` from `firebase/database`.
+    * **Helper Function:** Create an `async function getUserData(userId)` that uses `get(ref(database, 'users/' + userId))` to fetch and return the user's `username` and `profileImageUrl`.
+    * **Main Feed Logic:**
+        1.  Create a `const feedContainer = document.getElementById('feed-container');`
+        2.  Create a reference to all posts, ordered by timestamp: `const postsRef = query(ref(database, 'posts'), orderByChild('timestamp'));`
+        3.  Attach a real-time listener: `onValue(postsRef, async (snapshot) => { ... });`
+        4.  **Inside the `onValue` callback:**
+            * Set `feedContainer.innerHTML = '<h2>Main Feed</h2>';`
+            * Create an empty array `posts` to hold post data.
+            * Use `snapshot.forEach((childSnapshot) => { posts.push(childSnapshot.val()); });`
+            * Reverse the array to show newest first: `posts.reverse();`
+            * Loop through the reversed `posts` array. For each `postData`:
+                * `await` the `getUserData(postData.userId)` to get `userData`.
+                * Create the HTML for the post card.
+                * Prepend this HTML to the `feedContainer`.
+            * **Post Card HTML Structure:**
+                * `<div class="post-card">`
+                * `<div class="post-header">`
+                * `<img src="${userData.profileImageUrl}" class="post-profile-pic">`
+                * `<span class="post-username">${userData.username}</span>`
+                * `</div>`
+                * `<img src="${postData.imageUrl}" class="post-image">`
+                * `<p class="post-caption">${postData.caption}</p>`
+                * `</div>`
+
+4.  **CSS (Update `style.css`):**
+    * Add styling for the "round frame" on the profile picture.
+        * `.post-profile-pic { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; margin-right: 10px; }`
+    * Add styling for the post card.
+        * `.post-card { border: 1px solid #ccc; border-radius: 8px; margin: 20px auto; max-width: 500px; }`
+        * `.post-header { display: flex; align-items: center; padding: 10px; }`
+        * `.post-image { width: 100%; height: auto; }`
+        * `.post-caption { padding: 0 10px 10px 10px; }`
+
+5.  **HTML (Update `index.html`):**
+    * Link the two new script files as modules (after `firebase-config.js`).
+        * `<script type="module" src="upload.js"></script>`
+        * `<script type="module" src="feed.js"></script>`
+
+
